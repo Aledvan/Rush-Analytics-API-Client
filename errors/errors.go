@@ -1,31 +1,30 @@
 package errors
 
-import (
-	"fmt"
-)
+import "fmt"
 
 type APIError struct {
-	StatusCode int
-	Message    string
+	statusCode int
+	message    string
 }
 
 func (e *APIError) Error() string {
-	return fmt.Sprintf("API error %d: %s", e.StatusCode, e.Message)
+	return fmt.Sprintf("API error %d: %s", e.statusCode, e.message)
 }
 
-func NewAPIError(statusCode int, message string) *APIError {
-	return &APIError{
-		StatusCode: statusCode,
-		Message:    message,
-	}
+func NewAPIError(statusCode int, message string) error {
+	return &APIError{statusCode: statusCode, message: message}
 }
 
 type ConfigError struct {
-	Message string
+	message string
 }
 
 func (e *ConfigError) Error() string {
-	return "config error: " + e.Message
+	return fmt.Sprintf("Config error: %s", e.message)
+}
+
+func NewConfigError(message string) error {
+	return &ConfigError{message: message}
 }
 
 type NetworkError struct {
@@ -34,9 +33,13 @@ type NetworkError struct {
 }
 
 func (e *NetworkError) Error() string {
-	return fmt.Sprintf("network error during %s: %v", e.Op, e.Err)
+	return fmt.Sprintf("Network error during %s: %v", e.Op, e.Err)
 }
 
 func (e *NetworkError) Unwrap() error {
 	return e.Err
+}
+
+func NewNetworkError(op string, err error) error {
+	return &NetworkError{Op: op, Err: err}
 }

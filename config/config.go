@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"ra-api-client/errors"
 
 	"gopkg.in/yaml.v2"
 )
@@ -41,22 +42,23 @@ func Load() (*Config, error) {
 	}
 
 	if data == nil {
-		return nil, &ConfigError{"config file not found in config/, config.yaml"}
+		return nil, errors.NewConfigError("Config file not found in config/, config.yaml")
 	}
 
 	var config Config
 	err = yaml.Unmarshal(data, &config)
 	if err != nil {
-		return nil, &ConfigError{err.Error()}
+		return nil, errors.NewConfigError(err.Error())
 	}
 
 	return &config, nil
 }
 
-type ConfigError struct {
-	Message string
-}
+func GetConfig() (*Config, error) {
+	cfg, err := Load()
+	if err != nil {
+		return nil, errors.NewConfigError("Failed to load config file. Please check settings")
+	}
 
-func (e *ConfigError) Error() string {
-	return "config error: " + e.Message
+	return cfg, nil
 }

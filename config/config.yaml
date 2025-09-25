@@ -1,6 +1,6 @@
 api:
   base_url: "https://app.rush-analytics.ru/apiv2"
-  api_key: "Your API Key"
+  api_key: "7c451111f9c3d17eb7ae4cb574bb246b"
 
 http:
   timeout: 30

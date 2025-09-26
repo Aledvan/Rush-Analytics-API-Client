@@ -5,6 +5,3 @@ api:
 http:
   timeout: 30
   retries: 3
-
-logging:
-  level: "info"

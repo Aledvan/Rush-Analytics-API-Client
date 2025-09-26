@@ -12,7 +12,7 @@ func main() {
 		Page:      1,
 	}
 
-	resp, err := ranktracker.CompetitorsGetData(params)
+	resp, err := ranktracker.RegionsGetData(params)
 	if err != nil {
 		fmt.Printf("Ошибка: %v\n", err)
 		return

@@ -17,10 +17,6 @@ type Config struct {
 		Timeout int `yaml:"timeout"`
 		Retries int `yaml:"retries"`
 	} `yaml:"http"`
-
-	Logging struct {
-		Level string `yaml:"level"`
-	} `yaml:"logging"`
 }
 
 func Load() (*Config, error) {

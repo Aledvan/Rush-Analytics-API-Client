@@ -22,7 +22,7 @@ func NewHttpClient() *HTTPClient {
 	logger := slog.Default()
 	return &HTTPClient{
 		client: &http.Client{
-			Timeout: 30 * time.Second,
+			Timeout: time.Duration(cfg.HTTP.Timeout) * time.Second,
 		},
 		config: cfg,
 		logger: logger,
@@ -101,6 +101,7 @@ func (c *HTTPClient) Post(url string, body interface{}) (*http.Response, error) 
 	}
 
 	if resp.StatusCode >= 400 {
+		defer resp.Body.Close()
 		var errorResponse struct {
 			Error string `json:"error"`
 		}

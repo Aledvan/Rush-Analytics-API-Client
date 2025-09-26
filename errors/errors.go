@@ -11,6 +11,10 @@ func (e *APIError) Error() string {
 	return fmt.Sprintf("API error %d: %s", e.statusCode, e.message)
 }
 
+func (e *APIError) StatusCode() int {
+	return e.statusCode
+}
+
 func NewAPIError(statusCode int, message string) error {
 	return &APIError{statusCode: statusCode, message: message}
 }

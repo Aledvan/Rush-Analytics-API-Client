@@ -1,4 +1,4 @@
-package response
+package ranktracker
 
 import (
 	"encoding/json"
@@ -22,16 +22,16 @@ type Keyword struct {
 	Positions    []Position `json:"positions"`
 }
 
-type RankTrackerResponse struct {
+type DynamicResponse struct {
 	Keywords []Keyword `json:"keywords"`
 }
 
-func ParseRankTrackerResponse(body []byte) (*RankTrackerResponse, error) {
-	var resp RankTrackerResponse
+func ParseDynamicResponse(body []byte) (*DynamicResponse, error) {
+	var resp DynamicResponse
 
 	if err := json.Unmarshal(body, &resp); err != nil {
 		return nil, errors.NewAPIError(
-			200,
+			400,
 			fmt.Sprintf("Invalid JSON: %v. Raw: %s", err, string(body)),
 		)
 	}

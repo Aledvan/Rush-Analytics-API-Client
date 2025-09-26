@@ -2,23 +2,21 @@ package main
 
 import (
 	"fmt"
-	"ra-api-client/api"
+	"ra-api-client/api/ranktracker"
 	"ra-api-client/endpoints"
 )
 
 func main() {
-	params := endpoints.RankTrackerDynamicParams{
-		ProjectID:   1054510,
-		RegionID:    1,
-		PeriodStart: "2025-06-01",
-		PeriodEnd:   "2025-06-30",
+	params := endpoints.RankTrackerParams{
+		ProjectID: 1054510,
+		Page:      1,
 	}
 
-	resp, err := api.GetData(params)
+	resp, err := ranktracker.CompetitorsGetData(params)
 	if err != nil {
 		fmt.Printf("Ошибка: %v\n", err)
 		return
 	}
 
-	fmt.Printf("Response: %t\n", resp)
+	fmt.Printf("Response: %+v\n", resp)
 }

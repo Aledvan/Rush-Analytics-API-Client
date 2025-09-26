@@ -7,23 +7,24 @@ import (
 	"ra-api-client/config"
 )
 
-type RankTrackerDynamicParams struct {
-	ProjectID   int
-	RegionID    int
-	PeriodStart string
-	PeriodEnd   string
-}
+func RankTrackerURL(params RankTrackerParams, urlpart string) (string, error) {
+	if err := params.Validate(); err != nil {
+		return "", fmt.Errorf("invalid parameters: %w", err)
+	}
 
-func RankTrackerDynamicURL(params RankTrackerDynamicParams) (string, error) {
 	cfg, err := config.GetConfig()
+	if err != nil {
+		return "", fmt.Errorf("failed to load config: %w", err)
+	}
+
 	base, err := url.Parse(cfg.API.BaseURL)
 	if err != nil {
 		return "", fmt.Errorf("invalid base URL: %w", err)
 	}
 
-	base.Path = path.Join(base.Path, "result", "ranktracker", "dynamic",
+	base.Path = path.Join(base.Path, "result", "ranktracker", urlpart,
 		fmt.Sprintf("%d", params.ProjectID),
-		fmt.Sprintf("%d", params.RegionID),
+		fmt.Sprintf("%d", params.Page),
 	)
 
 	q := base.Query()

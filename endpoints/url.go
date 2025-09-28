@@ -98,7 +98,36 @@ func ProjectIdsURL(params ProjectIdsParams, urlpart string) (string, error) {
 		return "", fmt.Errorf("invalid base URL: %w", err)
 	}
 
-	base.Path = path.Join(base.Path, urlpart)
+	base.Path = path.Join(base.Path, urlpart,
+		fmt.Sprintf("%d", params.ProjectType),
+	)
+
+	q := base.Query()
+	q.Set("apikey", cfg.API.APIKey)
+	base.RawQuery = q.Encode()
+
+	return base.String(), nil
+}
+
+func StatusURL(params StatusParams, urlpart string) (string, error) {
+	if err := params.Validate(); err != nil {
+		return "", fmt.Errorf("invalid parameters: %w", err)
+	}
+
+	cfg, err := config.GetConfig()
+	if err != nil {
+		return "", fmt.Errorf("failed to load config: %w", err)
+	}
+
+	base, err := url.Parse(cfg.API.BaseURL)
+	if err != nil {
+		return "", fmt.Errorf("invalid base URL: %w", err)
+	}
+
+	base.Path = path.Join(base.Path, urlpart,
+		fmt.Sprintf("%d", params.ProjectType),
+		fmt.Sprintf("%d", params.ProjectID),
+	)
 
 	q := base.Query()
 	q.Set("apikey", cfg.API.APIKey)

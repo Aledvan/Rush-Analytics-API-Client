@@ -45,3 +45,20 @@ func (p ProjectIdsParams) Validate() error {
 
 	return nil
 }
+
+type StatusParams struct {
+	ProjectID   int
+	ProjectType int
+}
+
+func (p StatusParams) Validate() error {
+	if p.ProjectID <= 0 {
+		return fmt.Errorf("ProjectID must be positive, got %d", p.ProjectID)
+	}
+
+	if p.ProjectType <= 0 {
+		return fmt.Errorf("ProjectType must be positive, got %d", p.ProjectType)
+	}
+
+	return nil
+}

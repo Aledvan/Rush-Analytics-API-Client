@@ -62,3 +62,15 @@ func (p StatusParams) Validate() error {
 
 	return nil
 }
+
+type GdsParams struct {
+	ProjectID int
+}
+
+func (p GdsParams) Validate() error {
+	if p.ProjectID <= 0 {
+		return fmt.Errorf("ProjectID must be positive, got %d", p.ProjectID)
+	}
+
+	return nil
+}

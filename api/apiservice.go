@@ -1,17 +1,17 @@
-package ranktracker
+package api
 
 import (
 	"io"
 	"ra-api-client/client"
-	"ra-api-client/endpoints"
 	"ra-api-client/errors"
 )
 
-func apiService(
-	params endpoints.RankTrackerParams,
-	endpoint string,
-) ([]byte, error) {
-	url, err := endpoints.RankTrackerURL(params, endpoint)
+type URLBuilder interface {
+	Build(endpoint string) (string, error)
+}
+
+func APIService(builder URLBuilder, endpoint string) ([]byte, error) {
+	url, err := builder.Build(endpoint)
 	if err != nil {
 		return nil, err
 	}

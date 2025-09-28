@@ -1,9 +1,11 @@
 package ranktracker
 
 import (
+	"ra-api-client/api"
 	"ra-api-client/endpoints"
 )
 
-func compareRegionsGetData(params endpoints.RankTrackerParams) ([]byte, error) {
-	return apiService(params, "compare_regions")
+func CompareRegionsGetData(params endpoints.RankTrackerParams) ([]byte, error) {
+	builder := endpoints.RankTrackerURLBuilder{Params: params}
+	return api.APIService(builder, "compare_regions")
 }

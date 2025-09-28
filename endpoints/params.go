@@ -21,3 +21,27 @@ func (p RankTrackerParams) Validate() error {
 
 	return nil
 }
+
+type ResultParams struct {
+	ProjectID int
+}
+
+func (p ResultParams) Validate() error {
+	if p.ProjectID <= 0 {
+		return fmt.Errorf("ProjectID must be positive, got %d", p.ProjectID)
+	}
+
+	return nil
+}
+
+type ProjectIdsParams struct {
+	ProjectType int
+}
+
+func (p ProjectIdsParams) Validate() error {
+	if p.ProjectType <= 0 {
+		return fmt.Errorf("ProjectType must be positive, got %d", p.ProjectType)
+	}
+
+	return nil
+}

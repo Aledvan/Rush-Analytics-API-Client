@@ -1,9 +1,11 @@
 package ranktracker
 
 import (
+	"ra-api-client/api"
 	"ra-api-client/endpoints"
 )
 
 func CompetitorsLeadersGetData(params endpoints.RankTrackerParams) ([]byte, error) {
-	return apiService(params, "competitors_leaders")
+	builder := endpoints.RankTrackerURLBuilder{Params: params}
+	return api.APIService(builder, "competitors_leaders")
 }

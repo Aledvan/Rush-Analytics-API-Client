@@ -8,15 +8,17 @@ import (
 
 func main() {
 	params := endpoints.RankTrackerParams{
-		ProjectID: 1054510,
-		Page:      1,
+		PeriodStart: "025-06-01",
+		PeriodEnd:   "2025-06-30",
+		ProjectID:   1054510,
+		Page:        1,
 	}
 
-	resp, err := ranktracker.RegionsGetData(params)
+	resp, err := ranktracker.VisibilityGetData(params)
 	if err != nil {
 		fmt.Printf("Ошибка: %v\n", err)
 		return
 	}
 
-	fmt.Printf("Response: %+v\n", resp)
+	fmt.Printf("Response: %+v\n", string(resp))
 }

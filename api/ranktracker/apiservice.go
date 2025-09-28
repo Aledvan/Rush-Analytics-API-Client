@@ -7,13 +7,10 @@ import (
 	"ra-api-client/errors"
 )
 
-type ParserFunc func([]byte) (*interface{}, error)
-
-func apiService[T any](
+func apiService(
 	params endpoints.RankTrackerParams,
 	endpoint string,
-	parseFunc func([]byte) (*T, error),
-) (*T, error) {
+) ([]byte, error) {
 	url, err := endpoints.RankTrackerURL(params, endpoint)
 	if err != nil {
 		return nil, err
@@ -31,5 +28,5 @@ func apiService[T any](
 		return nil, errors.NewNetworkError("Read response body", err)
 	}
 
-	return parseFunc(body)
+	return body, nil
 }

@@ -39,10 +39,6 @@ type ProjectIdsParams struct {
 }
 
 func (p ProjectIdsParams) Validate() error {
-	if p.ProjectType <= 0 {
-		return fmt.Errorf("ProjectType must be positive, got %d", p.ProjectType)
-	}
-
 	return nil
 }
 
